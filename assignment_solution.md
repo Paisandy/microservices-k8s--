@@ -77,12 +77,10 @@ metadata:
 spec:
   capacity:
     storage: 256Mi
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /home/node/mongodata
+    path: /tmp/db
 ```
 run the mongo-pv.yml
 ```
