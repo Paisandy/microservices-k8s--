@@ -84,6 +84,10 @@ spec:
   hostPath:
     path: /home/node/mongodata
 ```
+run the mongo-pv.yml
+```
+kubectl apply -f mongo-pv.yml
+```
 ![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/a66a3336-1284-4d21-9e0e-4b631784dd42)
 
 ## Step 5: Creating a Persistent Volume Claim (PVC) Manifest in K8s
@@ -107,7 +111,167 @@ spec:
     requests:
       storage: 256Mi
 ```
+run the mongo-pvc.yml
+```
+kubectl apply -f mongo-pvc.yml
+```
 ![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/50123d80-5a93-4326-b5d0-1935e6c723d2)
 
+## Step 6: Create a Deployment Manifest file of Mongo DB
+```
+cat mongo.yml
+```
+### mongo.yml
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+      app: mongo
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: storage
+              mountPath: /data/db
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+```
+run the mongo.yml
+```
+kubectl apply -f mongo.yml
+```
+### mongo-svc.yml
+```
+cat mongo-svc.yml
+```
+```
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: mongo
+```
+run the mongo-svc.yml
+```
+kubectl apply -f mongo-svc.yml
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/2dafd394-55b3-4c07-9b38-516cdac1f474)
 
+## Step 7: Create the Deployment manifest File of the Flask App
+```
+cat taskmaster.yml
+```
+### taskmaster.yml
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskmaster
+  labels:
+    app: taskmaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taskmaster
+  template:
+    metadata:
+      labels:
+        app: taskmaster
+    spec:
+      containers:
+        - name: taskmaster
+          image: sandypaia320/microservices:latest
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+```
+run the taskmaster.yml
+```
+kubectl apply -f taskmaster.yml
+```
+Make sure to replace the value of image key with that of your "image" name as shown in the YAML file.
 
+The deployment creates 1 pod with the "sandypaia320/microservices:latest" image we pushed earlier. The key containerPort declares that the container accepts connections from port 5000.
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/1edb6978-11dc-4198-a3b0-354a4d1ee563)
+
+## Step 8: Create the service manifest file of the Flask App
+```
+cat taskmaster-svc.yml
+```
+### taskmaster-svc.yml
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskmaster-svc
+spec:
+  selector:
+    app: taskmaster
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+      nodePort: 30007
+  # This service is of type NodePort, that means you can access it using the URL
+  # <NodeIP>:30007 which is the nodePort mentioned above
+  type: NodePort
+```
+run the taskmaster-svc.yml
+```
+kubectl apply -f taskmaster-svc.yml
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/972aafb9-22aa-429f-92a0-79bfca01e107)
+### do check the pods
+```
+kubectl get pods
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/0cc02eca-e45a-4292-9eda-0cf490288c85)
+
+## Step 9: Test the Application
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/3a1a1970-279f-4e2b-bcb2-e386bc7ba0c0)
+You can now test the application by using 
+kubectl exec -it "pod name" -- bash
+```
+kubectl exec -it mongo-6976f643c8-9g5h7 -- bash
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/2308431c-9e5b-458c-9e18-4f780e114845)
+### do curl
+```
+curl http://172.0.0.1:30007
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/f11cba28-098a-4ca6-a707-53749a7e810d)
+### Test MongoDB:
+```
+curl htttp://127.0.0.1:30007/tasks
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/0b718d13-37f4-4b24-bb78-b40978c64261)
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/f6a7f841-2028-46b6-a6c1-88856ee100e0)
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/720b30df-1561-4f8f-8235-0b2131399acc)
+
+### Congratulations on your Microservices Project!
+Congratulations on your successful completion of this hands-on microservices project, utilizing Flask and MongoDB, while effectively harnessing the capabilities of Persistent Volumes and Claims. Your deployment of this impressive application has not only demonstrated your technical prowess but has also provided you with valuable insights into the realm of Kubernetes.
+
+Why not share this remarkable achievement on LinkedIn to inspire and connect with like-minded tech enthusiasts? And always keep in mind that if you have any questions or require guidance for your next project, please don't hesitate to reach out to me on LinkedIn (https://www.linkedin.com/in/er-sandesh-pai-994181201/) . Keep pushing the boundaries of innovation and continue exploring the dynamic world of Kubernetes!
