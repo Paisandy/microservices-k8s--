@@ -62,7 +62,7 @@ Now, our focus shifts to deploying the application within our Kubernetes cluster
 
 Persistent Volumes, or PVs, serve as a vital component in Kubernetes, providing a dependable means to store data. Particularly beneficial for databases like MongoDB, PVs offer dedicated storage space that ensures the safe preservation of your data. Regardless of changes or restarts to your applications or containers, PVs guarantee the integrity and accessibility of your valuable data within the Kubernetes environment.
 
-In summary, PVs play a crucial role in safeguarding your database information and maintaining its consistency in the Kubernetes ecosystem. For more in-depth information about persistent volumes, please refer to the official Kubernetes documentation on this topic: Kubernetes - Persistent Volumes.
+In summary, PVs play a crucial role in safeguarding your database information and maintaining its consistency in the Kubernetes ecosystem. For more in-depth information about persistent volumes, please refer to the official Kubernetes documentation on this topic: Kubernetes - Persistent Volumes (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#node-affinity)
 
 
 
