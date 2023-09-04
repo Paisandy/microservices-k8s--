@@ -53,3 +53,17 @@ docker push sandypaia320/microservices:latest
 ![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/d7dee8ad-d6a8-4ac1-8c99-12b24d7ab905)
 ![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/e8314dda-773f-43d7-bd90-d5bb0a1ccda0)
 
+## Step 4: Creating a Persistent Volume Manifest for K8s
+Basically I have used in Killer Code. The Killer code is a open source where you can practice a K8s. It's a free of cost.
+
+Congratulations on reaching this milestone! 🥳 You've successfully completed the initial steps of the continuous integration process by building a Docker image and uploading it to Docker Hub.
+
+Now, our focus shifts to deploying the application within our Kubernetes cluster. To achieve this, we'll start by creating a Persistent Volume (PV) object designed to securely store MongoDB data.
+
+Persistent Volumes, or PVs, serve as a vital component in Kubernetes, providing a dependable means to store data. Particularly beneficial for databases like MongoDB, PVs offer dedicated storage space that ensures the safe preservation of your data. Regardless of changes or restarts to your applications or containers, PVs guarantee the integrity and accessibility of your valuable data within the Kubernetes environment.
+
+In summary, PVs play a crucial role in safeguarding your database information and maintaining its consistency in the Kubernetes ecosystem. For more in-depth information about persistent volumes, please refer to the official Kubernetes documentation on this topic: Kubernetes - Persistent Volumes.
+
+
+
+
