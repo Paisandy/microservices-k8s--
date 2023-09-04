@@ -46,7 +46,7 @@ docker login
 ```
 ![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/dd20ac14-0058-4f6b-8331-d729db57e025)
 ### Push the Docker image to DockerHub:
-command is "docker push <username>/microservices:latest
+command is "docker push <username>/microservices:latest"
 ```
 docker push sandypaia320/microservices:latest
 ```
