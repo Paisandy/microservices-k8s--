@@ -64,6 +64,50 @@ Persistent Volumes, or PVs, serve as a vital component in Kubernetes, providing 
 
 In summary, PVs play a crucial role in safeguarding your database information and maintaining its consistency in the Kubernetes ecosystem. For more in-depth information about persistent volumes, please refer to the official Kubernetes documentation on this topic: Kubernetes - Persistent Volumes (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#node-affinity)
 
+copy the YAML from here or you can see in Github file or else do "cat mongo-py.yml"
+```
+cat mongo-pv.yml
+```
+### mongo-pv.yml
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-pv
+spec:
+  capacity:
+    storage: 256Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /home/node/mongodata
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/a66a3336-1284-4d21-9e0e-4b631784dd42)
+
+## Step 5: Creating a Persistent Volume Claim (PVC) Manifest in K8s
+Once the creation of the persistent volume has been completed successfully, the next step is to establish a persistent volume claim (PVC). This PVC will be utilized by our MongoDB deployment to request and allocate storage space for storing data.
+
+Think of Persistent Volume Claims (PVCs) as customized storage requests in the Kubernetes environment. They serve as formal requests for storage resources within Kubernetes when your applications require them. These requests specify both the desired amount and the specific type of storage needed. Kubernetes then utilizes this information to find and allocate the requested storage resources, ensuring that your applications have sufficient storage capacity to store and retrieve data as required.
+copy the YAML from here or you can see in Github file or else do "cat mongo-pvc.yml"
+```
+cat mongo-pvc.yml
+```
+### moongo-pvc.yml
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+```
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/50123d80-5a93-4326-b5d0-1935e6c723d2)
 
 
 
