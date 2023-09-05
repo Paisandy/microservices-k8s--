@@ -37,6 +37,9 @@ spec:
 10. after that save it.
 11. should add "voumeMode" as a Filesyatem and persistent volume here is the documents follow it https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 12. should add path of the worker node
+13. now do "curl" command run it.
+![image](https://github.com/Paisandy/microservices-k8s--/assets/115485972/2512f01f-5c09-4846-871f-aa6effe63392)
+
 ### The reason is 
 the hostPath is set to "/home/ubuntu/mongodata"
 
