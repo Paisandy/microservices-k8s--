@@ -96,7 +96,7 @@ copy the YAML from here or you can see in Github file or else do "cat mongo-pvc.
 ```
 cat mongo-pvc.yml
 ```
-### moongo-pvc.yml
+### mongo-pvc.yml
 ```
 apiVersion: v1
 kind: PersistentVolumeClaim
