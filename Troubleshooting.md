@@ -19,7 +19,7 @@ cd mongodata
 7. Go on the master instance,
 8. To proceed, access the master server and make modifications to the mongo-pv.yml file. Below, I've provided a code snippet that you can simply copy and paste. Lastly, ensure the path matches your specific setup; I've used /home/ubuntu/mongodata, but replace it with the path you've configured.
  ```
- apiVersion: v1
+apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mongo-pv
